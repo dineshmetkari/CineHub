@@ -49,6 +49,7 @@ http://localhost:8080/swagger-ui/index.html
 | Build | Maven 3.8+ |
 | Connection pool | HikariCP (20 max connections) |
 | Cache | Spring Cache (simple in-memory; swap Redis in production) |
+| Docker | Container |
 
 ---
 
