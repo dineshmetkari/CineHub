@@ -1,0 +1,57 @@
+  version: '3.5'
+  services:
+    mysql:
+      image: mysql:latest
+      restart: always
+      container_name: "mysql"
+      volumes:
+        - "./db:/var/lib/mysql"
+      ports:
+        - 3306:3306
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=movie_booking
+        - MYSQL_USER=admin
+        - MYSQL_PASSWORD=admin123
+
+    # Uncomment the below block to build the backend from local Dockerfile instead of using pre-built image from Docker Hub    
+    # backend:
+    #   build:
+    #     context: .
+    #     dockerfile: Dockerfile
+    #   links:
+    #     - mysql
+    #   container_name: cinehub-backend
+    #   restart: on-failure
+    #   ports:
+    #     - "8080:8080"
+    #   environment:
+    #     - DB_PORT=3306
+    #     - DB_NAME=movie_booking
+    #     - DB_HOST=mysql
+    #     - MYSQL_USER=root
+    #     - MYSQL_USER_PASSWORD=root
+    #   depends_on:
+    #     - mysql
+
+
+# Using pre-built image from Docker Hub for faster startup during development
+    backend:
+      # build:
+      #   context: .
+      #   dockerfile: Dockerfile
+      links:
+        - mysql
+      image: dineshmetkari/cinehub-backend:1.0
+      container_name: cinehub-backend
+      restart: on-failure
+      ports:
+        - "8080:8080"
+      environment:
+        - DB_PORT=3306
+        - DB_NAME=movie_booking
+        - DB_HOST=mysql
+        - MYSQL_USER=root
+        - MYSQL_USER_PASSWORD=root
+      depends_on:
+        - mysql
