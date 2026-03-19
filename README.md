@@ -119,11 +119,7 @@ City ──< Theatre ──< Screen ──< Seat
 
 Key entity decisions:
 
-- **Seats are screen-scoped**, not show-scoped. Seat records are created once when a theatre partner allocates inventory. `BookingSeat` is the join table that links a booking to specific seats for a specific show, with a `ticketPriceAtBooking` snapshot so price changes never affect issued receipts.
-- **`@Version` on `Show` and `Booking`** provides optimistic locking against lost-update on the `availableSeatCount` field.
 - **Pessimistic write lock** (`PESSIMISTIC_WRITE`) on the seat query inside `BookingService` prevents two concurrent transactions from booking the same seat simultaneously.
-- **`Show.ShowStatus`** enum (`SCHEDULED → RUNNING → COMPLETED / CANCELLED`) tracks lifecycle alongside the `isActive` boolean used in query filters.
-- **`Booking.PaymentStatus`** (`PENDING / COMPLETED / FAILED / REFUNDED`) is tracked independently from `BookingStatus` so a confirmed booking can still have a pending payment while awaiting a gateway callback.
 
 ---
 
