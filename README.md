@@ -11,17 +11,27 @@ Prerequisite:
 •	Git
 •	Docker
 
-Open command prompt; c:
+Open command prompt; c:\
+
 Clone Github project:
+
 git clone https://github.com/dineshmetkari/CineHub 
+
 cd CineHub  
+
 docker-compose up -d 
 
+
 Open browser & open url: 
+
 http://localhost:8080/swagger-ui/index.html
+
 -Register 
+
 - Login
+
 -Copy token to Authorize
+
 -Explore API endpoints.
 
 
@@ -315,14 +325,7 @@ mvn test -Dspring.profiles.active=test
 
 ---
 
-## Known build note — Lombok on Java 21
 
-If you encounter `java.lang.ExceptionInInitializerError: TypeTag::UNKNOWN` at compile time, it means Lombok is being run in an isolated annotation processor classloader where it cannot see the javac internals. The `pom.xml` in this project is already configured to avoid this:
-
-- Lombok version is managed by the Spring Boot BOM via `<lombok.version>1.18.34</lombok.version>` in `<properties>` — no `<version>` tag in the dependency block.
-- There is **no** `<annotationProcessorPaths>` block in the compiler plugin. Lombok is picked up from the regular compile classpath (`scope=provided`) through `META-INF/services`, which puts it in the same classloader as javac and resolves the error.
-
----
 
 ## Future enhancements
 
